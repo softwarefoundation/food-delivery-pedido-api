@@ -1,6 +1,7 @@
 package com.softwarefoundation.fooddeliverypedidoapi.entity;
 
-import com.softwarefoundation.fooddeliverypedidoapi.dto.ClienteDto;
+import com.softwarefoundation.fooddeliverypedidoapi.dto.ClientePedidoDto;
+import com.softwarefoundation.fooddeliverypedidoapi.dto.PedidoDto;
 import lombok.Getter;
 import lombok.Setter;
 import org.modelmapper.ModelMapper;
@@ -21,7 +22,15 @@ public class Cliente {
     @Column(name = "CLIENTE_ID")
     private Long clienteId;
 
-    public static Cliente from(ClienteDto dto){
+    @Column(name = "NOME")
+    private String nome;
+
+    public static Cliente from(ClientePedidoDto dto){
+        Cliente cliente = new ModelMapper().map(dto, Cliente.class);
+        return cliente;
+    }
+
+    public static Cliente from(PedidoDto dto){
         Cliente cliente = new ModelMapper().map(dto, Cliente.class);
         return cliente;
     }

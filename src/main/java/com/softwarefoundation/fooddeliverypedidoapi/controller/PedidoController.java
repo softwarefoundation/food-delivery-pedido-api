@@ -1,8 +1,8 @@
 package com.softwarefoundation.fooddeliverypedidoapi.controller;
 
-import com.softwarefoundation.fooddeliverypedidoapi.dto.ClienteDto;
-import com.softwarefoundation.fooddeliverypedidoapi.entity.Cliente;
-import com.softwarefoundation.fooddeliverypedidoapi.service.ClienteService;
+import com.softwarefoundation.fooddeliverypedidoapi.dto.PedidoDto;
+import com.softwarefoundation.fooddeliverypedidoapi.entity.Pedido;
+import com.softwarefoundation.fooddeliverypedidoapi.service.PedidoService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,17 +14,17 @@ import java.util.Objects;
 @RestController
 @RequestMapping(path = "/api")
 @Slf4j
-public class ClienteController {
+public class PedidoController {
 
     @Autowired
-    private ClienteService clienteService;
+    private PedidoService pedidoService;
 
     @GetMapping("/cliente/{id}")
     public ResponseEntity pesquisar(@PathVariable("id") Long id) {
 
         try {
-            Cliente cliente = clienteService.pesquisarPorId(id);
-            return Objects.nonNull(cliente) ? ResponseEntity.ok(cliente) : ResponseEntity.notFound().build();
+            Pedido pedido = pedidoService.pesquisarPorId(id);
+            return Objects.nonNull(pedido) ? ResponseEntity.ok(pedido) : ResponseEntity.notFound().build();
 
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
@@ -33,23 +33,23 @@ public class ClienteController {
     }
 
     @PostMapping("/cliente")
-    public ResponseEntity cadastrar(@RequestBody ClienteDto clienteDto) {
+    public ResponseEntity cadastrar(@RequestBody PedidoDto dto) {
         try {
-            log.info(clienteDto.toString());
-            return ResponseEntity.ok(clienteService.salvar(Cliente.from(clienteDto)));
+            log.info(dto.toString());
+            return ResponseEntity.ok(pedidoService.salvar(Pedido.from(dto)));
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
     }
 
     @PutMapping("/cliente/{id}")
-    public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody ClienteDto clienteDto) {
-        Cliente cliente = Cliente.from(clienteDto);
-        cliente.setId(id);
-        Cliente cl = clienteService.atualizar(cliente);
+    public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody PedidoDto dto) {
+        Pedido pedido = Pedido.from(dto);
+        pedido.setId(id);
+        Pedido pd = pedidoService.atualizar(pedido);
 
-        if (Objects.nonNull(cl)) {
-            return ResponseEntity.ok(cl);
+        if (Objects.nonNull(pd)) {
+            return ResponseEntity.ok(pd);
         } else {
             return ResponseEntity.notFound().build();
         }
@@ -58,7 +58,7 @@ public class ClienteController {
 
     @DeleteMapping("/cliente/{id}")
     public ResponseEntity excluir(@PathVariable("id") Long id) {
-        if (clienteService.excluir(id)) {
+        if (pedidoService.excluir(id)) {
             return ResponseEntity.ok().build();
         } else {
             return ResponseEntity.notFound().build();

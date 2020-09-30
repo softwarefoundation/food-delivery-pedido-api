@@ -2,7 +2,6 @@ package com.softwarefoundation.fooddeliverypedidoapi.service;
 
 import com.softwarefoundation.fooddeliverypedidoapi.entity.Cliente;
 import com.softwarefoundation.fooddeliverypedidoapi.entity.Pedido;
-import com.softwarefoundation.fooddeliverypedidoapi.repository.ClienteRepository;
 import com.softwarefoundation.fooddeliverypedidoapi.repository.PedidoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,26 +9,26 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class ClienteService {
+public class PedidoService {
 
     @Autowired
-    private ClienteRepository clienteRepository;
+    private PedidoRepository clienteRepository;
 
 
-    public Cliente pesquisar(final Long id) {
-        Optional<Cliente> cliente = clienteRepository.findById(id);
-        return cliente.isPresent() ? cliente.get() : null;
+    public Pedido pesquisarPorId(final Long id) {
+        Optional<Pedido> pedido = clienteRepository.findById(id);
+        return pedido.isPresent() ? pedido.get() : null;
     }
 
-    public Cliente salvar(Cliente cliente) {
+    public Pedido salvar(Pedido cliente) {
         return clienteRepository.save(cliente);
     }
 
-    public Cliente atualizar(Cliente cliente) {
-        Optional<Cliente> optional = clienteRepository.findById(cliente.getId());
+    public Pedido atualizar(Pedido pedido) {
+        Optional<Pedido> optional = clienteRepository.findById(pedido.getId());
 
         if (optional.isPresent()) {
-            return clienteRepository.save(cliente);
+            return clienteRepository.save(pedido);
         } else {
             return null;
         }
@@ -38,9 +37,9 @@ public class ClienteService {
     public boolean excluir(Long id) {
         try {
 
-            Optional<Cliente> cliente = clienteRepository.findById(id);
-            if (cliente.isPresent()) {
-                clienteRepository.delete(cliente.get());
+            Optional<Pedido> pedido = clienteRepository.findById(id);
+            if (pedido.isPresent()) {
+                clienteRepository.delete(pedido.get());
                 return true;
             } else {
                 return false;
