@@ -12,14 +12,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Objects;
 
 @RestController
-@RequestMapping(path = "/api")
+@RequestMapping()
 @Slf4j
 public class PedidoController {
 
     @Autowired
     private PedidoService pedidoService;
 
-    @GetMapping("/cliente/{id}")
+    @GetMapping("/pedido/{id}")
     public ResponseEntity pesquisar(@PathVariable("id") Long id) {
 
         try {
