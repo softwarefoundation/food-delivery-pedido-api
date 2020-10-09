@@ -20,7 +20,7 @@ public class ReceiverClienteMenssage {
         this.clienteService = clienteService;
     }
 
-    @RabbitListener(queues = {"${cadastro.client.rabbitmq.queue}"})
+    @RabbitListener(queues = {"${cadastro.cliente.rabbitmq.queue}"})
     public void receive(@Payload ClientePedidoDto dto) {
         log.info(dto.toString());
         clienteService.salvar(Cliente.from(dto));
